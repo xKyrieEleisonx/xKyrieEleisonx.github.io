@@ -1,8 +1,91 @@
 <!DOCTYPE html>
-    <head>
+    <head> 
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
         <title>Hello World</title>
+        <script>
+            var ts2 = 1484418600000;
+            var dates = [];
+            var spikes = [5, -5, 3, -3, 8, -8]
+            for (var i = 0; i < 120; i++) {
+            ts2 = ts2 + 86400000;
+            var innerArr = [ts2, dataSeries[1][i].value];
+            dates.push(innerArr)
+            }
+
+            var options = {
+            chart: {
+                type: 'area',
+                stacked: false,
+                height: 350,
+                zoom: {
+                type: 'x',
+                enabled: true,
+                autoScaleYaxis: true
+                },
+                toolbar: {
+                autoSelected: 'zoom'
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            series: [{
+                name: 'XYZ MOTORS',
+                data: dates
+            }],
+            markers: {
+                size: 0,
+            },
+            title: {
+                text: 'Stock Price Movement',
+                align: 'left'
+            },
+            fill: {
+                type: 'gradient',
+                gradient: {
+                shadeIntensity: 1,
+                inverseColors: false,
+                opacityFrom: 0.5,
+                opacityTo: 0,
+                stops: [0, 90, 100]
+                },
+            },
+            yaxis: {
+                labels: {
+                formatter: function (val) {
+                    return (val / 1000000).toFixed(0);
+                },
+                },
+                title: {
+                text: 'Price'
+                },
+            },
+            xaxis: {
+                type: 'datetime',
+            },
+
+            tooltip: {
+                shared: false,
+                y: {
+                formatter: function (val) {
+                    return (val / 1000000).toFixed(0)
+                }
+                }
+            }
+            }
+
+            var chart = new ApexCharts(
+            document.querySelector("#chart"),
+            options
+            );
+
+            chart.render();
+  
+        </script>
     </head>
     <body>
-
+        <h1>Hello world</h1>
+        <div id="chart"></div>
     </body>
-</html>"Hello World" 
+</html>
