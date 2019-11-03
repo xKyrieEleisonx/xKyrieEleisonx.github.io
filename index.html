@@ -1,64 +1,62 @@
 <!DOCTYPE html>
     <head> 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script src="https://npmcdn.com/chart.js@latest/dist/Chart.bundle.min.js"></script>
+        <script src="https://npmcdn.com/Chart.Zoom.js@latest/Chart.Zoom.min.js"></script>
 
         <title>Hello World</title>
         <style>
-            #chart {
-                max-width: 650px;
-                margin: 35px auto;
-            }
-            #chart, .chart-box {
-                padding-top: 20px;
-                padding-left: 10px;
-                background: #fff;
-                border: 1px solid #ddd;
-                box-shadow: 0 22px 35px -16px rgba(0,0,0, 0.1);
+            .myChartDiv {
+                max-width: 600px;
+                max-height: 400px;
             }
         </style>
        
     </head>
     <body>
-        <h1>Hello world</h1>
-        <div id="chart"></div>
+        <div class="myChartDiv">
+            <canvas id="myChart" width="600" height="400"></canvas>
+        </div>
         <script>
-            var ts2 = 1484418600000;
-            var dates = [];
-            var spikes = [5, -5, 3, -3, 8, -8]
-            for (var i = 0; i < 120; i++) {
-                ts2 = ts2 + 86400000;
-            }
-
-            var options = {
-                chart: {
-                    type: 'area',
-                    stacked: false,
-                    height: 350,
-                    zoom: {
-                        type: 'x',
-                        enabled: true,
-                        autoScaleYaxis: true
-                    },
-                    toolbar: {
-                        autoSelected: 'zoom'
-                    }
+            var ctx = document.getElementById("myChart");
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+                    datasets: [{
+                        label: '# of Votes',
+                        data: [12, 19, 3, 5, 2, 3]
+                    }]
                 },
-                series: [{
-                    name: 'sales',
-                    data: [30,40,35,50,49,60,70,91,125]
-                }],
-                xaxis: {
-                    categories: [1991,1992,1993,1994,1995,1996,1997, 1998,1999]
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero:true
+                            }
+                        }]
+                    },
+                    // Container for pan options
+                    pan: {
+                        // Boolean to enable panning
+                        enabled: true,
+
+                        // Panning directions. Remove the appropriate direction to disable 
+                        // Eg. 'y' would only allow panning in the y direction
+                        mode: 'x'
+                    },
+
+                    // Container for zoom options
+                    zoom: {
+                        // Boolean to enable zooming
+                        enabled: true,
+
+                        // Zooming directions. Remove the appropriate direction to disable 
+                        // Eg. 'y' would only allow zooming in the y direction
+                        mode: 'x',
+                    }
                 }
-            }
-
-            var chart = new ApexCharts(
-                document.querySelector("#chart"),
-                options
-            );
-
-            chart.render();
+            });
     
         </script>
     </body>
